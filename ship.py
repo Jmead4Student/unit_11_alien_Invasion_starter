@@ -27,12 +27,12 @@ class Ship:
         self.moving_up = False
         self.moving_down = False
         self.y = float(self.rect.y)
-        self.aresenal = arsenal
+        self.arsenal = arsenal
 
     def update(self):
         #Updating the position of the ship   
         self._update_ship_movement()
-        self.aresenal.update_arsenal()
+        self.arsenal.update_arsenal()
 
     def _update_ship_movement(self):
         temp_speed = self.settings.ship_speed
@@ -44,8 +44,8 @@ class Ship:
         self.rect.y = self.y
 
     def draw(self):
-        self.aresenal.draw()
+        self.arsenal.draw()
         self.screen.blit(self.image, self.rect)
 
     def fire(self):
-        return self.aresenal.fire_bullet()
+        return self.arsenal.fire_bullet()
