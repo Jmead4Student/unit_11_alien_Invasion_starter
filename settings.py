@@ -1,7 +1,11 @@
 from pathlib import Path
 class Settings:
-    
+    """A class to store all settings for game and assets. 
+    """
     def __init__(self):
+        """Initializes game background, resolution and FPS. Iniyializefsa ship image, size and speed. 
+        Initializes bullet image, sound, speed, size, and quantity.
+        """
         self.name: str = 'Alien Invasion'
         self.screen_w = 1200
         self.screen_h = 800

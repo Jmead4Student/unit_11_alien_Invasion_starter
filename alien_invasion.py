@@ -6,8 +6,11 @@ from arsenal import Arsenal
 
 
 class AlienInvasion:
-
+    """Game loop class that manages games assets and logic.
+    """
     def __init__(self):
+        """Starts the game and handles framerate, sound, and ship.
+        """
         pygame.init()
         self.settings = Settings()
 
@@ -31,7 +34,8 @@ class AlienInvasion:
         self.ship = Ship(self, Arsenal(self))
     
     def run_game(self):
-        # Game Loop
+        """This is the game loop.
+        """
         while self.running:
             self._check_events()
             self.ship.update()
@@ -39,11 +43,15 @@ class AlienInvasion:
             self.clock.tick(self.settings.FPS)
 
     def _update_screen(self):
+        """Updates the surfaces displayed.
+        """
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
         pygame.display.flip()
 
     def _check_events(self):
+        """Checks for keypresses and exit sequences.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -55,6 +63,11 @@ class AlienInvasion:
                 self._check_keyup_events(event)
 
     def _check_keyup_events(self, event):
+        """Checks for the up or down key being released.
+
+        Args:
+            event (key): Up key or Down key.
+        """
         if event.key == pygame.K_UP:
             self.ship.moving_up = False
         elif event.key == pygame.K_DOWN:
@@ -62,6 +75,12 @@ class AlienInvasion:
 
 
     def _check_keydown_events(self, event):
+        """Checks for the Up or Down key being released for movement. The Q key to quit the program.
+        The space key to fire the laser and play a sound. Or the player closing the window to quit.
+
+        Args:
+            event (key): The Up key, Down key, Q key, or Space key.
+        """
         if event.key == pygame.K_UP:
             self.ship.moving_up = True
         elif event.key == pygame.K_DOWN:
