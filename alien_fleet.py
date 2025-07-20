@@ -18,15 +18,14 @@ class AlienFleet:
         self.settings = game.settings
         self.fleet = pygame.sprite.Group()
         self.fleet_direction = self.settings.fleet_direction
-        self.fleet_drop_speed = self.settings.fleet_drop_speed
+        self.fleet_approach_speed = self.settings.fleet_approach_speed
 
         self.create_fleet()
 
 
     def create_fleet(self):
-        """Creates a fleet of aliens at the top of the screen.
+        """Creates a fleet of aliens at the right of the screen.
         """
-        #Change to right for assignment
         alien_w = self.settings.alien_w
         alien_h = self.settings.alien_h
         screen_w = self.settings.screen_w
@@ -34,7 +33,7 @@ class AlienFleet:
 
         fleet_w, fleet_h = self.calculate_fleet_size(alien_w, screen_w, alien_h, screen_h)
 
-        x_offset, y_offset = self.calculate_offsets(alien_w, alien_h, screen_w, fleet_w, fleet_h)
+        x_offset, y_offset = self.calculate_offsets(alien_w, alien_h, screen_w, screen_h, fleet_w, fleet_h)
         self._create_rectangle_fleet(alien_w, alien_h, fleet_w, fleet_h, x_offset, y_offset)
 
 
@@ -58,28 +57,32 @@ class AlienFleet:
                 self._create_alien(current_x, current_y)
 
 
-    def calculate_offsets(self, alien_w, alien_h, screen_w, fleet_w, fleet_h):
+    def calculate_offsets(self, alien_w, alien_h, screen_w, screen_h, fleet_w, fleet_h):
         """Calculates the starting x and y offset position of the fleet.
 
         Args:
             alien_w (int): Width of a single alien.
             alien_h (int): Height of a single alien.
             screen_w (int): Width of the screen.
+            screen_h (int): Height of the screen.
             fleet_w (int): Number of columns in the fleet.
             fleet_h (int): Number of rows in the fleet.
 
         Returns:
             tuple[int, int]: The caculated x and y offsets.
         """
-        half_screen = self.settings.screen_h //2
         fleet_horizontal_space = fleet_w * alien_w
         fleet_vertical_space = fleet_h * alien_h
-        x_offset = int((screen_w - fleet_horizontal_space) // 2)
-        y_offset = int((half_screen - fleet_vertical_space) // 2)
-        return x_offset,y_offset
+
+        right_half_width = screen_w / 2
+        horizontal_margin = (right_half_width - fleet_horizontal_space) / 2
+
+        x_offset = int(right_half_width + horizontal_margin)
+        y_offset = int((screen_h - fleet_vertical_space) // 2)
+        return x_offset, y_offset
 
 
-    def calculate_fleet_size(self, alien_w, screen_w, alien_h, screen_h):
+    def calculate_fleet_size(self, alien_w, alien_h, screen_w, screen_h):
         """Calculates how many ships can fit in the fleet.
         
         Args:
@@ -91,9 +94,8 @@ class AlienFleet:
         Returns:
             tuple[int, int]: The calculated fleet height and width
         """
-        # Reorient fleet for assignment
-        fleet_w = (screen_w // alien_w)
-        fleet_h = ((screen_h / 2) // alien_h)
+        fleet_w = (screen_w // 2) // alien_w
+        fleet_h = screen_h // alien_h
 
         if fleet_w % 2 == 0:
             fleet_w -= 1
@@ -122,21 +124,19 @@ class AlienFleet:
     def _check_fleet_edges(self):
         """Checks if the fleet has reached the edge of screen and changes direction.
         """
-        #Double check for assignment.
         alien: Alien
         for alien in self.fleet:
             if alien.check_edges():
-                self._drop_alien_fleet()
+                self._alien_fleet_approach()
                 self.fleet_direction *= -1
                 break
         
 
-    def _drop_alien_fleet(self):
-        """Moves the fleet down on the screen.
+    def _alien_fleet_approach(self):
+        """Moves the fleet left on the screen.
         """
-        #Change to left for assignment.
         for alien in self.fleet:
-            alien.y += self.fleet_drop_speed
+            alien.y += self.fleet_approach_speed
     
 
     def update_fleet(self):
