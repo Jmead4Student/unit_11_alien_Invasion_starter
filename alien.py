@@ -6,9 +6,19 @@ if TYPE_CHECKING:
     from alien_fleet import AlienFleet
 
 class Alien (Sprite):
+    """Class for the single aliens in the fleet.
 
+    Args:
+        Sprite (pygame.sprite.Sprite): The image of the alien scaled.
+    """
     def __init__(self, fleet: 'AlienFleet', x: float, y: float):
-        
+        """Initializes the alien and sets its starting position.
+
+        Args:
+            fleet (AlienFleet): The fleet object this alien belongs to.
+            x (float): The initial x-coordinate of the alien.
+            y (float): The initial y-coordinate of the alien.
+        """
         super().__init__()
         self.fleet = fleet
         self.screen = fleet.game.screen
@@ -28,7 +38,8 @@ class Alien (Sprite):
 
 
     def update(self):
-        
+        """Updates the alien's horizontal position.
+        """
         temp_speed = self.settings.fleet_speed
         self.x += temp_speed * self.fleet.fleet_direction
         self.rect.x = self.x
@@ -36,10 +47,16 @@ class Alien (Sprite):
 
 
     def check_edges(self):
+        """Checks if the alien is at the left or right edge of the screen.
 
+        Returns:
+            bool: True if the alien is at an edge, False otherwise.
+        """
+        #Upadate for assignment.
         return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left)
 
 
     def draw_alien(self):
-        
+        """Draws the alien.
+        """
         self.screen.blit(self.image, self.rect)

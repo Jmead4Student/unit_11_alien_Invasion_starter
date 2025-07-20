@@ -9,10 +9,11 @@ from time import sleep
 
 
 class AlienInvasion:
-    """Game loop class that manages games assets and logic.
+    """Game loop class that manages games assets, resources, and logic.
     """
     def __init__(self):
-        
+        """Initializes the game and manages all of the game resources.
+        """
         pygame.init()
         self.settings = Settings()
         self.game_stats = Gamestats(self.settings.starting_ship_count)
@@ -43,7 +44,8 @@ class AlienInvasion:
     
 
     def run_game(self):
-
+        """Starts the main game loop.
+        """
         while self.running:
             self._check_events()
             if self.game_active:
@@ -55,6 +57,8 @@ class AlienInvasion:
 
 
     def _check_collisions(self):
+        """Checks for collisions with aliens, plays a sound, and resets the level if the fleet is destroyed.
+        """
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
         
@@ -71,7 +75,8 @@ class AlienInvasion:
 
 
     def _check_game_status(self):
-
+        """Resets the game if a ship is lost and ends the game on a game over.
+        """
         if self.game_stats.ships_left > 0:
             self.game_stats.ships_left -= 1
             self._reset_level()
@@ -81,6 +86,8 @@ class AlienInvasion:
 
 
     def _reset_level(self):
+        """Resets the game by clearing bullets and creating a new alien fleet.
+        """
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()

@@ -3,7 +3,7 @@ class Settings:
     """A class to store all settings for game and assets. 
     """
     def __init__(self):
-        """Initializes game background, resolution and FPS. Iniyializefsa ship image, size and speed. 
+        """Initializes game background, resolution and FPS. Initializes a ship image, size and speed. 
         Initializes bullet image, sound, speed, size, and quantity.
         """
         self.name: str = 'Alien Invasion'
