@@ -18,11 +18,13 @@ class Arsenal:
         self.settings = game.settings
         self.arsenal = pygame.sprite.Group()
 
+
     def update_arsenal(self):
         """Updates the bullets positions and removes them if the cross the right boundary.
         """
         self.arsenal.update()
         self._remove_bullets_offscreen()
+
 
     def _remove_bullets_offscreen(self):
         """Establishes the boundary for the bullets and removes them.
@@ -31,11 +33,13 @@ class Arsenal:
             if bullet.rect.left >= self.game.screen.get_rect().right:
                 self.arsenal.remove(bullet)
 
+
     def draw(self):
         """Draw the bullets on the screen.
         """
         for bullet in self.arsenal:
             bullet.draw_bullet()
+
 
     def fire_bullet(self):
         """Creates bullets and adds them to the arsenal to track.

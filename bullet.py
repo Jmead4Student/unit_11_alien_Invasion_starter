@@ -28,11 +28,13 @@ class Bullet(Sprite):
         self.rect.midleft = game.ship.rect.midright
         self.x = float(self.rect.x)
 
+
     def update(self):
         """Fires the bullet from left to right.
         """
         self.x += self.settings.bullet_speed
         self.rect.x = self.x
+
 
     def draw_bullet(self):
         """Draws the bullet onto the screen.

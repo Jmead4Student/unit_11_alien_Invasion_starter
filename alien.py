@@ -26,6 +26,7 @@ class Alien (Sprite):
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
 
+
     def update(self):
         
         temp_speed = self.settings.fleet_speed
@@ -33,9 +34,11 @@ class Alien (Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+
     def check_edges(self):
 
         return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left)
+
 
     def draw_alien(self):
         
