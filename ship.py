@@ -29,11 +29,14 @@ class Ship:
         self.image = pygame.transform.rotate(self.image, -90)
         
         self.rect  = self.image.get_rect()
-        self.rect.midleft = self.boundaries.midleft
+        self._center_ship()
         self.moving_up = False
         self.moving_down = False
-        self.y = float(self.rect.y)
         self.arsenal = arsenal
+
+    def _center_ship(self):
+        self.rect.midleft = self.boundaries.midleft
+        self.y = float(self.rect.y)
 
     def update(self):
         """Updates the ships location and bullet count.
@@ -65,3 +68,9 @@ class Ship:
             Int: How many bullets have be fired.
         """
         return self.arsenal.fire_bullet()
+    
+    def check_collisions(self, other_group):
+        if pygame.sprite.spritecollideany(self, other_group):
+            self._center_ship()
+            return True
+        return False
