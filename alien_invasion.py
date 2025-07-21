@@ -1,3 +1,10 @@
+"""
+Alien Invasion
+John Mead
+This program is a recreated version of space invaders with the orientation flipped.
+7-20-25
+"""
+
 import sys
 import pygame
 from settings import Settings
@@ -62,7 +69,7 @@ class AlienInvasion:
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
         
-        if self.alien_fleet.check_fleet_bottom():
+        if self.alien_fleet.check_fleet_left():
             self._check_game_status()
 
         collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)

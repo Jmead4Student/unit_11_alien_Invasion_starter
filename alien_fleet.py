@@ -17,8 +17,8 @@ class AlienFleet:
         self.game = game
         self.settings = game.settings
         self.fleet = pygame.sprite.Group()
-        self.fleet_direction = self.settings.fleet_direction
-        self.fleet_approach_speed = self.settings.fleet_approach_speed
+        self.fleet_x_direction = self.settings.fleet_x_direction
+        self.fleet_y_direction = self.settings.fleet_y_direction
 
         self.create_fleet()
 
@@ -31,7 +31,7 @@ class AlienFleet:
         screen_w = self.settings.screen_w
         screen_h = self.settings.screen_h
 
-        fleet_w, fleet_h = self.calculate_fleet_size(alien_w, screen_w, alien_h, screen_h)
+        fleet_w, fleet_h = self.calculate_fleet_size(alien_w, alien_h, screen_w, screen_h)
 
         x_offset, y_offset = self.calculate_offsets(alien_w, alien_h, screen_w, screen_h, fleet_w, fleet_h)
         self._create_rectangle_fleet(alien_w, alien_h, fleet_w, fleet_h, x_offset, y_offset)
@@ -122,22 +122,21 @@ class AlienFleet:
 
 
     def _check_fleet_edges(self):
-        """Checks if the fleet has reached the edge of screen and changes direction.
+        """Checks if the fleet has reached the top or bottom edge of the screen.
         """
         alien: Alien
         for alien in self.fleet:
             if alien.check_edges():
-                self._alien_fleet_approach()
-                self.fleet_direction *= -1
+                self._change_fleet_direction()
                 break
-        
-
-    def _alien_fleet_approach(self):
-        """Moves the fleet left on the screen.
-        """
-        for alien in self.fleet:
-            alien.y += self.fleet_approach_speed
     
+    def _change_fleet_direction(self):
+        """Shifts the entire fleet left and changes its vertical direction."""
+        alien: 'Alien'
+        for alien in self.fleet.sprites():
+            alien.x -= self.settings.fleet_drop_speed
+
+        self.fleet_y_direction *= -1
 
     def update_fleet(self):
         """Updates the position of aliens in the fleet.
@@ -166,16 +165,15 @@ class AlienFleet:
         return pygame.sprite.groupcollide(self.fleet, other_group, True, True)
     
 
-    def check_fleet_bottom(self):
-        """Checks if any aliens have reached the bottom of the screen.
+    def check_fleet_left(self):
+        """Checks if any aliens have reached the Left side of the screen.
 
         Returns:
-            bool: True if an alien reached the bottom edge, False otherwise.
+            bool: True if an alien reached the left edge, False otherwise.
         """
-        #Update for assignment
         alien: Alien
         for alien in self.fleet:
-            if alien.rect.bottom >= self.settings.screen_h:
+            if alien.rect.left <= 0:
                 return True
         return False
     
