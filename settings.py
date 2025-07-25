@@ -1,8 +1,12 @@
+#Docstring
+
 from pathlib import Path
+
 class Settings:
     """A class to store all settings for game and assets. 
     """
     def __init__(self):
+    
         """Initializes game background, resolution and FPS. Initializes a ship image, size and speed. 
         Initializes bullet image, sound, speed, size, and quantity.
         """
@@ -12,6 +16,7 @@ class Settings:
         self.FPS = 60
         self.bg_file = Path.cwd() / 'Assets' / 'images' / 'Starbasesnow.png'
         self.difficulty_scale = 1.1
+        self.scores_file = Path.cwd() / 'Assets' / 'file' / 'scores.json'
 
         self.ship_file = Path.cwd() / 'Assets' / 'images' / 'ship2(no bg).png'
         self.ship_w = 40
@@ -40,6 +45,7 @@ class Settings:
 
 
     def initialize_dynamic_settings(self):
+        #Docstring
         self.ship_speed = 5
         self.starting_ship_count = 3
 
@@ -54,6 +60,7 @@ class Settings:
   
         
     def increase_difficulty(self):
+        #Docstring
         self.ship_speed *= self.difficulty_scale
         self.bullet_speed *= self.difficulty_scale
         self.fleet_speed *= self.difficulty_scale
