@@ -22,15 +22,18 @@ class Button:
 
     
     def _prep_msg (self, msg):
+        #Docstring
         self.msg_image = self.font.render(msg, True, self.settings.text_color, None)
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
     
     def draw(self,):
+        #Docstring
         self.screen.fill(self.settings.button_color, self.rect)
         self.screen.blit(self.msg_image,self.msg_image_rect)
 
 
-    def check_click(self, mouse_pos):
+    def check_clicked(self, mouse_pos):
+        #Docstring
         return self.rect.collidepoint(mouse_pos)
