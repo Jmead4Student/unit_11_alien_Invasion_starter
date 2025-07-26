@@ -1,3 +1,10 @@
+"""
+Alien Invasion
+John Mead
+This module handles the game statistics class and all it's functions.
+7-26-25
+"""
+
 import json
 
 from typing import TYPE_CHECKING

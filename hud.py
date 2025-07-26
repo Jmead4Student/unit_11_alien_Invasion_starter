@@ -1,3 +1,10 @@
+"""
+Alien Invasion
+John Mead
+This module handles the Heads Up Display class and all it's functions.
+7-26-25
+"""
+
 import pygame.font
 
 class HUD:

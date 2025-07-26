@@ -1,3 +1,10 @@
+"""
+Alien Invasion
+John Mead
+This module handles the powerup class and all it's functions.
+7-26-25
+"""
+
 import pygame
 from pygame.sprite import Sprite
 from typing import TYPE_CHECKING

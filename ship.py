@@ -1,3 +1,10 @@
+"""
+Alien Invasion
+John Mead
+This module handles the ship class and all it's functions.
+7-26-25
+"""
+
 import pygame
 from typing import TYPE_CHECKING
 

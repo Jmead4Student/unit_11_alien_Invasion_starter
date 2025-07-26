@@ -1,3 +1,10 @@
+"""
+Alien Invasion
+John Mead
+This module handles the arsenal class and all it's functions.
+7-26-25
+"""
+
 import pygame
 from bullet import Bullet
 from typing import TYPE_CHECKING
