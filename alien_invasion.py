@@ -7,12 +7,13 @@ This program is a recreated version of space invaders with the orientation flipp
 
 import sys
 import pygame
+import random
 from settings import Settings
 from game_stats import Gamestats
 from ship import Ship
 from arsenal import Arsenal
 from alien_fleet import AlienFleet
-from time import sleep
+from time import sleep 
 from button import Button
 from hud import HUD
 from powerup import PowerUp
@@ -52,6 +53,7 @@ class AlienInvasion:
         self.ship = Ship(self, Arsenal(self))
         self.alien_fleet = AlienFleet(self)
         self.alien_fleet.create_fleet()
+        self.powerups = pygame.sprite.Group()
 
         self.play_button = Button(self, 'Play')
         self.game_active = False
@@ -64,6 +66,7 @@ class AlienInvasion:
             self._check_events()
             if self.game_active:
                 self.ship.update()
+                self.powerups.update()
                 self.alien_fleet.update_fleet()
                 self._check_collisions()
             self._update_screen()
@@ -71,7 +74,7 @@ class AlienInvasion:
 
 
     def _check_collisions(self):
-        """Checks for collisions with aliens, plays a sound, and resets the level if the fleet is destroyed.
+        """Checks for collisions with aliens or powerups, plays a sound, and resets the level if the fleet is destroyed.
         """
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
@@ -79,8 +82,14 @@ class AlienInvasion:
         if self.alien_fleet.check_fleet_left():
             self._check_game_status()
 
+        self._check_powerup_collisions()
+
         collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
         if collisions:
+            for aliens in collisions.values():
+                for alien in aliens:
+                    if random.random() < 0.2:
+                        self._create_powerup(alien.rect.center)
             self.impact_sound.play()
             self.impact_sound.fadeout(500)
             self.game_stats.update(collisions)
@@ -91,6 +100,22 @@ class AlienInvasion:
             self.settings.increase_difficulty()
             self.game_stats.update_level()
             self.HUD._update_level()
+
+
+    def _create_powerup(self, center):
+        """Create a power-up at the given location.
+        """
+        new_powerup = PowerUp(self, center)
+        self.powerups.add(new_powerup)
+
+
+    def _check_powerup_collisions(self):
+        """Check for collisions between the ship and power-ups.
+        """
+        collided_powerup = pygame.sprite.spritecollideany(self.ship, self.powerups)
+        if collided_powerup:
+            self.ship.activate_powerup()
+            collided_powerup.kill()
 
 
     def _check_game_status(self):
@@ -110,6 +135,7 @@ class AlienInvasion:
         self.ship.arsenal.arsenal.empty()
         self.alien_fleet.fleet.empty()
         self.alien_fleet.create_fleet()
+        self.powerups.empty()
 
 
     def restart_game(self):
@@ -118,7 +144,7 @@ class AlienInvasion:
         self.settings.initialize_dynamic_settings()
         self.game_stats.reset_stats()
         self.HUD.update_scores()
-        self._reset_level
+        self._reset_level()
         self.ship._center_ship()
         self.game_active = True
         pygame.mouse.set_visible(False)
@@ -130,6 +156,7 @@ class AlienInvasion:
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
         self.alien_fleet.draw()
+        self.powerups.draw(self.screen)
         self.HUD.draw()
 
         if not self.game_active:
