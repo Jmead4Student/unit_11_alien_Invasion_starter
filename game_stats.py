@@ -79,7 +79,7 @@ class Gamestats():
 
     
     def update_level(self):
-        
+        #Docstring
         self.level += 1
         # print(self.level)
 
