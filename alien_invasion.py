@@ -112,7 +112,8 @@ class AlienInvasion:
 
 
     def restart_game(self):
-        #docstring
+        """Resets the game stats, mouse vision, and recenters the ship.
+        """
         self.settings.initialize_dynamic_settings()
         self.game_stats.reset_stats()
         self.HUD.update_scores()
@@ -120,6 +121,7 @@ class AlienInvasion:
         self.ship._center_ship()
         self.game_active = True
         pygame.mouse.set_visible(False)
+
 
     def _update_screen(self):
         """Updates the surfaces displayed.
@@ -152,8 +154,10 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self._check_button_clicked()
 
+
     def _check_button_clicked(self):
-        #docstring
+        """Confirms if the "Play" button is clicked.
+        """
         mouse_pos = pygame.mouse.get_pos()
         if self.play_button.check_clicked(mouse_pos):
             self.restart_game()

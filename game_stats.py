@@ -1,6 +1,3 @@
-#Docstring
-
-# from pathlib import Path
 import json
 
 from typing import TYPE_CHECKING
@@ -9,10 +6,14 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class Gamestats():
-    """Class to tack statistics for the Alien Invasion game.
+    """Class to track statistics for the Alien Invasion game. Score, high score, level, and lives.
     """
     def __init__(self, game: 'AlienInvasion') -> None:
-        #Docstring
+        """Initializes the game statistics and hi score.
+
+        Args:
+            game (AlienInvasion): The main game object.
+        """
         self.game = game
         self.settings = game.settings
         self.max_score = 0
@@ -21,7 +22,8 @@ class Gamestats():
 
 
     def init_saved_scores(self):
-        #Docstring
+        """Loads the saved hi score or creates a json file to savew to if it doesn't exist.
+        """
         self.path = self.settings.scores_file
         if self.path.exists() and self.path.stat.__sizeof__() > 20:
             contents = self.path.read_text()
@@ -33,7 +35,8 @@ class Gamestats():
 
 
     def save_scores(self):
-        #Docstring
+        """Saves the high score to a json file.
+        """
         scores = {
             'hi_score': self.hi_score
         }
@@ -45,42 +48,50 @@ class Gamestats():
 
 
     def reset_stats(self):
-        #Docstring
+        """Resets the game's stats to start a new game.
+        """
         self.ships_left = self.settings.starting_ship_count
         self.score = 0
         self.level = 1
 
 
     def update(self, collisions):
-        #Docstring
+        """Updates the score, hiscore, and max score as needed when collisions happen.
+
+        Args:
+            collisions (int): Score gathered when an alien is destroyed.
+        """
         self._update_score(collisions)
         self._update_hi_score()
         self._update_max_score()
 
 
     def _update_max_score(self):
-        #Docstring
+        """Updates the highest score achieved in the current session.
+        """
         if self.score > self.max_score:
             self.max_score = self.score
-        # print(f"Max: {self.max_score}")
 
 
     def _update_hi_score(self):
-        #Docstring
+        """Updates the hi score if the current score is higher.
+        """
         if self.score > self.hi_score:
             self.hi_score = self.score
 
 
     def _update_score(self, collisions):
-        #Docstring
+        """Updates the score as aliens are hit with lasers.
+
+        Args:
+            collisions (list): Aliens destroyed by lasers.
+        """
         for alien in collisions.values():
             self.score += self.settings.alien_points
-        # print(f"Basic: {self.score}")
 
     
     def update_level(self):
-        #Docstring
+        """Increments the game level by 1.
+        """
         self.level += 1
-        # print(self.level)
-
 

@@ -1,14 +1,10 @@
-#Docstring
-
 from pathlib import Path
 
 class Settings:
     """A class to store all settings for game and assets. 
     """
     def __init__(self):
-    
-        """Initializes game background, resolution and FPS. Initializes a ship image, size and speed. 
-        Initializes bullet image, sound, speed, size, and quantity.
+        """Initializes static game settings like asset paths, screen size, asset sizes and colors.
         """
         self.name: str = 'Alien Invasion'
         self.screen_w = 1200
@@ -22,7 +18,6 @@ class Settings:
         self.ship_w = 40
         self.ship_h = 60
         
-
         self.bullet_file = Path.cwd() / 'Assets' / 'images' / 'laserBlast.png'
         self.laser_sound = Path.cwd() / 'Assets' / 'sound' / 'laser.mp3'        
         self.impact_sound = Path.cwd() / 'Assets' / 'sound' / 'impactSound.mp3'
@@ -45,7 +40,8 @@ class Settings:
 
 
     def initialize_dynamic_settings(self):
-        #Docstring
+        """Initializes settings that get modified by difficulty or get reset when a new game starts.
+        """
         self.ship_speed = 5
         self.starting_ship_count = 3
 
@@ -60,7 +56,8 @@ class Settings:
   
         
     def increase_difficulty(self):
-        #Docstring
+        """Increases the speed of assets to increase difficulty 
+        """
         self.ship_speed *= self.difficulty_scale
         self.bullet_speed *= self.difficulty_scale
         self.fleet_speed *= self.difficulty_scale

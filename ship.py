@@ -6,7 +6,6 @@ if TYPE_CHECKING:
     from arsenal import Arsenal
 
 
-
 class Ship:
     """Class to display the ship and update it's location and arsenal.
     """
@@ -34,15 +33,18 @@ class Ship:
         self.moving_down = False
         self.arsenal = arsenal
 
+
     def _center_ship(self):
         self.rect.midleft = self.boundaries.midleft
         self.y = float(self.rect.y)
+
 
     def update(self):
         """Updates the ships location and bullet count.
         """   
         self._update_ship_movement()
         self.arsenal.update_arsenal()
+
 
     def _update_ship_movement(self):
         """Manages the ships vertical ppsition and establishes screen boundaries.
@@ -55,11 +57,13 @@ class Ship:
 
         self.rect.y = self.y
 
+
     def draw(self):
         """Draws the ship on the screen and gives it arsenal.
         """
         self.arsenal.draw()
         self.screen.blit(self.image, self.rect)
+
 
     def fire(self):
         """Fires a bullet from the ships arsenal.
@@ -69,6 +73,7 @@ class Ship:
         """
         return self.arsenal.fire_bullet()
     
+
     def check_collisions(self, other_group):
         if pygame.sprite.spritecollideany(self, other_group):
             self._center_ship()
