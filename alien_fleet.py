@@ -130,6 +130,7 @@ class AlienFleet:
                 self._change_fleet_direction()
                 break
     
+
     def _change_fleet_direction(self):
         """Shifts the entire fleet left and changes its vertical direction."""
         alien: 'Alien'
@@ -137,6 +138,7 @@ class AlienFleet:
             alien.x -= self.settings.fleet_drop_speed
 
         self.fleet_y_direction *= -1
+
 
     def update_fleet(self):
         """Updates the position of aliens in the fleet.
@@ -176,6 +178,7 @@ class AlienFleet:
             if alien.rect.left <= 0:
                 return True
         return False
+    
     
     def check_destroyed_status(self):
         """Checks if the alien fleet has been destroyed.

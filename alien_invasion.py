@@ -15,6 +15,7 @@ from alien_fleet import AlienFleet
 from time import sleep
 from button import Button
 from hud import HUD
+from powerup import PowerUp
 
 
 class AlienInvasion:
