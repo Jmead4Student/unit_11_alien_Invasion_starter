@@ -22,14 +22,14 @@ class PowerUp(Sprite):
 
         self.rect.center = center
 
-        self.y = float(self.rect.y)
+        self.x = float(self.rect.x)
 
 
     def update(self):
-        """Move the power-up down the screen.
+        """Move the power-up across the screen.
         """
-        self.y += self.settings.powerup_speed
-        self.rect.y = self.y
+        self.x -= self.settings.powerup_speed
+        self.rect.x = self.x
 
 
     def draw(self):
